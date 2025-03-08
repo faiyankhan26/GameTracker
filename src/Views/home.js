@@ -1,30 +1,58 @@
-import {SquarePlus as IconSquarePlus} from "lucide-react";
-import React from 'react'
+import ScoreCard from '../Components/ScoreCard';
+import React, { useEffect, useState } from "react";
 
 function home() {
+    const [scoreA, setScoreA] = useState(0);
+    const [scoreB, setScoreB] = useState(0);
+
+    useEffect(() => {
+        if (scoreA < 10 && scoreB < 10) {
+            return;
+        }
+
+        if (scoreA === 10) {
+            alert("Team A Wins🎉🎊");
+        }
+
+        if (scoreB === 10) {
+            alert("Team B Wins 🎉🎊");
+        }
+    }, [scoreA, scoreB]);
+
     return (
-        <div className='bg-blue-100 min-h-screen p-8'>
-            <h1 className='text-center text-5xl py-8 border-2 border-blue-400 
-            border-dashed rounded-r-md text-blue-500 bg-white'>
+        <div className='bg-orange-100 min-h-screen p-6 md:p-8'>
+
+            <h1 className='text-center text-3xl md:text-5xl py-4 md:py-8 border-2 border-orange-400 
+            border-dashed rounded-r-md text-Orange-500 bg-white'>
                 GameTracker
             </h1>
 
-            <div className='flex justify-around'>
-                <div className='bg-white m-5 w-1/3 rounded-lg'>
-                    <h2 className='text-3xl text-center my-4 border-b-2 pb-4 text-blue-500 '>Team A</h2>
-                    <h3 className='text-8xl text-center'>0</h3>
-                    <div>
-                    <IconSquarePlus color="black"/>
-                    </div>
-                </div>
+            <div className='flex flex-col md:flex-row justify-center md:justify-around md:mt-10'>
+                <ScoreCard score={scoreA} teamName="Team A" increaseScore={() => {
+                    setScoreA(scoreA + 1);
+                }}
+                    decreaseScore={() => {
+                        setScoreA(scoreA - 1);
+                    }}
 
-                <div className='bg-white m-5 w-1/3 rounded-lg'>
-                    <h2 className='text-3xl text-center my-4 border-b-2 pb-4 text-blue-500 '>Team B</h2>
-                    <h3 className='text-8xl text-center'>0</h3>
-                    <div>
-                    <IconSquarePlus color="black"/>
-                    </div>
-                </div>
+                />
+
+                <ScoreCard score={scoreB} teamName="Team B" increaseScore={() => {
+                    setScoreB(scoreB + 1);
+                }}
+                    decreaseScore={() => {
+                        setScoreB(scoreB - 1);
+                    }}
+                />
+            </div>
+
+            <div className="flex justify-center mt-2">
+                <button className="bg-orange-500 px-8 py-3 text-3xl text-white rounded-lg" onClick={() => {
+                    setScoreA(0);
+                    setScoreB(0);
+                }}>
+                    Reset Now
+                </button>
             </div>
 
         </div>
